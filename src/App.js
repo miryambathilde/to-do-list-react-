@@ -8,6 +8,8 @@ import MiComponenteConContexto from "./components/hooks/useContext";
 import Ejemplo from "./components/hooks/ejemplo";
 import GreetingStyled from "./components/pure/greetingStyled";
 import Father from "./components/container/father";
+import ContactList1 from "./components/contacts/contactList";
+import ContactComponent from "./components/contacts/contact";
 
 function App () {
   return (
@@ -32,7 +34,8 @@ function App () {
       {/* </header> */ }
       {/* Gestión de eventos */ }
       {/* <Father></Father> */ }
-      <TaskListComponent></TaskListComponent>
+      {/* <TaskListComponent></TaskListComponent> */ }
+      <ContactComponent />
     </div>
   );
 };

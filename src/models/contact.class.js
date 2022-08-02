@@ -1,13 +1,16 @@
+/* eslint-disable no-undef */
 export class Contact {
+	id = '';
 	name = '';
 	lastName = '';
 	email = '';
-	connected = false;
+	status = false;
 
-	constructor (name, lastName, email, connected) {
+	constructor (id, name, lastName, email, status) {
+		this.id = id;
 		this.name = name;
 		this.lastName = lastName;
 		this.email = email;
-		this.connected = connected;
+		this.status = status;
 	}
 }

@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { LEVELS } from '../../models/levels.enum';
 import { Task } from '../../models/task.class';
 import TaskComponent from '../pure/task';
+import TaskForm from "../pure/forms/taskForm";
 
 // Importamos la hoja de estilos de task.scss
 import '../../styles/task.scss';
-import TaskForm from "../pure/forms/taskForm";
 
 const TaskListComponent = () => {
 
@@ -27,9 +27,35 @@ const TaskListComponent = () => {
 	}, [ tasks ]);
 
 
-	const changeCompleted = (id) => {
-		console.log('TODO: Cambiar estado de una tarea');
-	};
+	/* UPDATE STATUS TASK */
+	function completeTask (task) {
+		console.log('Complete this task: ', task);
+		const index = tasks.indexOf(task);
+		const tempTasks = [ ...tasks ];
+		// We update the state of the component with the new list of tasks and it will update the
+		// iteration of the tasks to show the new state that return the task updated
+		tempTasks[ index ].completed = !tempTasks[ index ].completed;
+		setTasks(tempTasks);
+	}
+
+	/* DELETE-REMOVE TASK */
+	function removeTask (task) {
+		console.log('Deleting this task: ', task);
+		const index = tasks.indexOf(task);
+		const tempTasks = [ ...tasks ];
+		tempTasks.splice(index, 1);
+		setTasks(tempTasks);
+	}
+
+	/* ADD NEW TASK */
+	function addTask (task) {
+		console.log('Adding this task: ', task);
+		const index = tasks.indexOf(task);
+		const tempTasks = [ ...tasks ];
+		tempTasks.push(task);
+		setTasks(tempTasks);
+	}
+
 
 	return (
 		<div>
@@ -38,7 +64,7 @@ const TaskListComponent = () => {
 					{/* card header */ }
 					<div className="card-header p-3">
 						<h5>
-							Tu lista de tareas:
+							Your task list:
 						</h5>
 					</div>
 					{/* card body (content) */ }
@@ -46,10 +72,10 @@ const TaskListComponent = () => {
 						<table>
 							<thead>
 								<tr>
-									<th scope="col">Título</th>
-									<th scope="col">Descripción</th>
-									<th scope="col">Prioridad</th>
-									<th scope="col">Acciones</th>
+									<th scope="col">Title</th>
+									<th scope="col">Decription</th>
+									<th scope="col">Priority</th>
+									<th scope="col">Actions</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -58,7 +84,10 @@ const TaskListComponent = () => {
 									return (
 										<TaskComponent
 											key={ index }
-											task={ task }>
+											task={ task }
+											complete={ completeTask }
+											remove={ removeTask }
+										>
 										</TaskComponent>
 									);
 								}
@@ -66,11 +95,9 @@ const TaskListComponent = () => {
 							</tbody>
 						</table>
 					</div>
-					<TaskForm></TaskForm>
 				</div>
 			</div>
-			{/* TODO: Aplicar un For/Map para renderizar una lista */ }
-			{/* <TaskComponent task={ defaultTask }></TaskComponent> */ }
+			<TaskForm add={ addTask }></TaskForm>
 		</div>
 	);
 };

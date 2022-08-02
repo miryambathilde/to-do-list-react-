@@ -8,7 +8,7 @@ import { FaTrash } from 'react-icons/fa';
 // Importamos la hoja de estilos de task.scss
 import '../../styles/task.scss';
 
-const TaskComponent = ({ task }) => {
+const TaskComponent = ({ task, complete, remove }) => {
 
 	useEffect(() => {
 		console.log('Task Created');
@@ -53,20 +53,14 @@ const TaskComponent = ({ task }) => {
 		}
 	}
 
+	// Function that returns a icon depending on the status of the task
 	function taskCompletedIcon () {
 		if (task.completed) {
-			return (<i style={ { color: 'green', fontSize: '18px' } }><BsToggleOn /></i>);
+			return (<i onClick={ () => complete(task) } className="task-action" style={ { color: 'green', fontSize: '18px' } }><BsToggleOn /></i>);
 		} else {
-			return (<i style={ { color: 'gray', fontSize: '18px' } }><BsToggleOff /></i>);
+			return (<i onClick={ () => complete(task) } className="task-action" style={ { color: 'gray', fontSize: '18px' } }><BsToggleOff /></i>);
 		}
 	}
-
-	/**
-	task.completed ?
-			(<i style={ { color: 'green', fontSize: '18px' } }><BsToggleOn /></i>)
-			:
-			(<i style={ { color: 'gray', fontSize: '18px' } }><BsToggleOff /></i>);
-	*/
 
 	return (
 		<tr className="fw-normal" >
@@ -83,7 +77,7 @@ const TaskComponent = ({ task }) => {
 			<td className="align-middle">
 				{/* Execution of function to return an icon depending on completation of the task */ }
 				{ taskCompletedIcon() }
-				<i style={ { color: '#C02706' } }><FaTrash /></i>
+				<i onClick={ () => remove(task) } className="task-action" style={ { color: '#C02706' } }><FaTrash /></i>
 			</td>
 		</tr >
 	);
@@ -91,7 +85,9 @@ const TaskComponent = ({ task }) => {
 
 
 TaskComponent.propTypes = {
-	task: PropTypes.instanceOf(Task)
+	task: PropTypes.instanceOf(Task).isRequired,
+	complete: PropTypes.func.isRequired,
+	remove: PropTypes.func.isRequired
 };
 
 
